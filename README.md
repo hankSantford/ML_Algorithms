@@ -36,7 +36,34 @@
 ##### ID3树
 ##### C4.5树
 ##### CART树
+##### Scikit-learn库中RT调参
+<br>关于决策树的参数：</br>
+* criterion: ”gini” or “entropy”(default=”gini”)是计算属性的gini(基尼不纯度)还是entropy(信息增益)，来选择最合适的节点。
+* splitter: ”best” or “random”(default=”best”)随机选择属性还是选择不纯度最大的属性，建议用默认。
+* max_features: 选择最适属性时划分的特征不能超过此值。
+<br>当为整数时，即最大特征数；当为小数时，训练集特征数*小数；</br>
+* if “auto”, then max_features=sqrt(n_features).
+* If “sqrt”, thenmax_features=sqrt(n_features).
+* If “log2”, thenmax_features=log2(n_features).
+* If None, then max_features=n_features.
+* max_depth: (default=None)设置树的最大深度，默认为None，这样建树时，会使每一个叶节点只有一个类别，或是达到min_samples_split。
+* min_samples_split:根据属性划分节点时，每个划分最少的样本数。
+* min_samples_leaf:叶子节点最少的样本数。
+* max_leaf_nodes: (default=None)叶子树的最大样本数。
+* min_weight_fraction_leaf: (default=0) 叶子节点所需要的最小权值
+* verbose:(default=0) 是否显示任务进程
+<br>关于随机森林特有的参数：</br>
+* n_estimators=10：决策树的个数，越多越好，但是性能就会越差，至少100左右（具体数字忘记从哪里来的了）可以达到可接受的性能和误差率。 
+bootstrap=True：是否有放回的采样。  
+* oob_score=False：oob（out of band，带外）数据，即：在某次决策树训练中没有被bootstrap选中的数据。多单个模型的参数训练，我们知道可以用cross validation（cv）来进行，但是特别消耗时间，而且对于随机森林这种情况也没有大的必要，所以就用这个数据对决策树模型进行验证，算是一个简单的交叉验证。性能消耗小，但是效果不错。  
+* n_jobs=1：并行job个数。这个在ensemble算法中非常重要，尤其是bagging（而非boosting，因为boosting的每次迭代之间有影响，所以很难进行并行化），因为可以并行从而提高性能。1=不并行；n：n个并行；-1：CPU有多少core，就启动多少job
+* warm_start=False：热启动，决定是否使用上次调用该类的结果然后增加新的。  
+* class_weight=None：各个label的权重。  
 
+<br>进行预测可以有几种形式：<br>
+* predict_proba(x)：给出带有概率值的结果。每个点在所有label的概率和为1.  
+* predict(x)：直接给出预测结果。内部还是调用的predict_proba()，根据概率的结果看哪个类型的预测值最高就是哪个类型。  
+* predict_log_proba(x)：和predict_proba基本上一样，只是把结果给做了log()处理。
 
 #### 提升决策树（Boosted Decision Tress）
 #### 决策树构造比较（Comparison Of Three Methods:Bagging,Boosting,and Randomization）
