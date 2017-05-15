@@ -37,6 +37,7 @@
 ##### C4.5树
 ##### CART树
 ##### Scikit-learn库中RT调参
+<font color=#0099ff size=7 face="黑体">color=#0099ff size=72 face="黑体"</font>  
 <br>关于决策树的参数：</br>
 * criterion: ”gini” or “entropy”(default=”gini”)是计算属性的gini(基尼不纯度)还是entropy(信息增益)，来选择最合适的节点。
 * splitter: ”best” or “random”(default=”best”)随机选择属性还是选择不纯度最大的属性，建议用默认。
